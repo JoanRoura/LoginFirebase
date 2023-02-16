@@ -1,13 +1,19 @@
 package com.example.loginfirebase.ui
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.ActivityLoginBinding
 import com.example.loginfirebase.databinding.ActivityRegisterBinding
+import com.example.loginfirebase.model.User
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -17,14 +23,28 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val db = Firebase.firestore
+
         binding.buttonRegister.setOnClickListener {
             val email = binding.editTextCorreuUsuari.text
             val password = binding.editTextContrasenyaUsuari.text
+
+            val user = User("", password.toString(), email.toString())
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString(), password.toString())
-                    .addOnCompleteListener { login ->
-                        if (login.isSuccessful) {
-                            showVerification(login.result?.user?.email ?: "", password.toString())
+                    .addOnCompleteListener { register ->
+                        if (register.isSuccessful) {
+                            showVerification(register.result?.user?.email ?: "", password.toString())
+
+                            db.collection(R.string.users_collection.toString()).document(email.toString())
+                                .set(user)
+                                .addOnSuccessListener {
+                                    Toast.makeText(applicationContext,"S'ha creat el document",Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(applicationContext,"No s'ha pogut crear el document",Toast.LENGTH_SHORT).show()
+                                }
                         } else {
                             showAlert()
                         }
