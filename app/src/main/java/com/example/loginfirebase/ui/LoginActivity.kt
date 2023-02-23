@@ -10,7 +10,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.loginfirebase.R
-import com.example.loginfirebase.databinding.ActivityIniciBinding
 import com.example.loginfirebase.databinding.ActivityLoginBinding
 import com.example.loginfirebase.model.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn

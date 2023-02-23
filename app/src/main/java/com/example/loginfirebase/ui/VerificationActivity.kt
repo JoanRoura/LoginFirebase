@@ -70,6 +70,19 @@ class VerificationActivity : AppCompatActivity() {
             }
             resultLauncher.launch(intentEditUser)
         }
+
+        binding.buttonGoToListUser.setOnClickListener {
+            val intentListUser = Intent(this, ListUserActivity::class.java).apply {
+                putExtra("name", name)
+            }
+            startActivity(intentListUser)
+        }
+
+        binding.buttonDeleteUser.setOnClickListener {
+            if (name != null) {
+                deleteUser(name)
+            }
+        }
     }
 
     private fun setup(name: String, email: String, password: String, provider: String) {
@@ -114,5 +127,26 @@ class VerificationActivity : AppCompatActivity() {
             .addOnFailureListener { e ->
                 Log.w(TAG, "Error adding document", e)
             }
+    }
+
+    private fun deleteUser(name: String) {
+        val db = Firebase.firestore
+
+        val docUsers = db.collection("users")
+
+        docUsers.document(name)
+            .delete()
+            .addOnSuccessListener {
+                Toast.makeText(applicationContext,"S'ha borrat el usuari correctament", Toast.LENGTH_SHORT).show()
+                goToLogin()
+            }
+            .addOnFailureListener {
+                Toast.makeText(applicationContext,"No s'ha pogut borrar el usuari.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun goToLogin() {
+        val intentLoginActivity = Intent(this, LoginActivity::class.java)
+        startActivity(intentLoginActivity)
     }
 }
