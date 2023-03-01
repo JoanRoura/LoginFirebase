@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:iconTint="@color/SecondaryColor"
+        android:id="@+id/trainingFragment"
+        android:icon="@drawable/exercise"
+        android:title="Training" />
+
+    <item
+        android:iconTint="@color/SecondaryColor"
+        android:id="@+id/customFragment"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Custom" />
+
+    <item
+        android:iconTint="@color/SecondaryColor"
+        android:id="@+id/reportFragment"
+        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:title="Report" />
+
+
+
+</menu>

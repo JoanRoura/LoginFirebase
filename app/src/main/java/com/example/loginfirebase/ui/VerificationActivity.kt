@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.ActivityVerificationBinding
 import com.example.loginfirebase.model.User
+import com.example.loginfirebase.ui.login.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

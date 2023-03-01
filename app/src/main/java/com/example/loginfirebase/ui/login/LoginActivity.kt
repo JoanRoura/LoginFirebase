@@ -1,6 +1,5 @@
-package com.example.loginfirebase.ui
+package com.example.loginfirebase.ui.login
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,9 +8,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.ActivityLoginBinding
 import com.example.loginfirebase.model.User
+import com.example.loginfirebase.ui.MainActivity
+import com.example.loginfirebase.ui.ProviderType
+import com.example.loginfirebase.ui.VerificationActivity
+import com.example.loginfirebase.ui.signin.SignInActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -24,6 +28,7 @@ import com.google.firebase.ktx.Firebase
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
+    lateinit var loginViewModel: LoginViewModel
     private val GOOGLE_SIGN_IN = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,14 +36,23 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+
         // Analytics Event
         val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(this)
         val bundle = Bundle()
         bundle.putString("message", "Integracio de Firebase completa ")
         analytics.logEvent("InitScreen", bundle)
 
+        loginViewModel.emailUser.value
+
+        getStrings()
         setup()
         session()
+    }
+
+    private fun getStrings() {
+
     }
 
     override fun onStart() {
@@ -56,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (name != null && email != null && password != null && provider != null) {
             binding.authLayout.visibility = View.INVISIBLE
-            showVerification(name, email, password, ProviderType.valueOf(provider))
+            showVerification(email, password, ProviderType.valueOf(provider))
         }
     }
 
@@ -64,48 +78,11 @@ class LoginActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
-        binding.buttonSignup.setOnClickListener {
-            val name = binding.editTextUsername.text
-            val email = binding.editTextEmail.text
-            val password = binding.editTextPassword.text
-
-            val newUser = User(name.toString(), password.toString(), email.toString())
-
-            Log.i("name", name.toString())
-            Log.i("email", email.toString())
-            Log.i("password", password.toString())
-
-            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(email.toString(), password.toString())
-                    .addOnCompleteListener { register ->
-                        if (register.isSuccessful) {
-                            showVerification(name.toString(),register.result?.user?.email ?: "", password.toString(), ProviderType.BASIC)
-
-                            // Afegir un nou Document a firebase  cada vegada que es crei un nou usuari
-                            db.collection(getString(R.string.users_collection)).document(name.toString())
-                                .set(newUser)
-                                .addOnSuccessListener {
-                                    Toast.makeText(applicationContext,"S'ha creat el document",
-                                        Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(applicationContext,"No s'ha pogut crear el document",
-                                        Toast.LENGTH_SHORT).show()
-                                }
-                        } else {
-                            showAlert()
-                        }
-                    }
-            }
-        }
-
         binding.buttonLogin.setOnClickListener {
-            val name = binding.editTextUsername.text
             val email = binding.editTextEmail.text
             val password = binding.editTextPassword.text
 
-            if (name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty()) {
                 FirebaseAuth.getInstance()
                     .signInWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener { login ->
@@ -115,18 +92,25 @@ class LoginActivity : AppCompatActivity() {
 
                             // Comprovar que l'usuari a verificat el correo
                             if (login.result?.user?.isEmailVerified == true) {
-                                showVerification(
-                                    name.toString(),
-                                    login.result?.user?.email ?: "",
-                                    password.toString(),
-                                    ProviderType.BASIC
-                                )
+//                                showVerification(
+//                                    login.result?.user?.email ?: "",
+//                                    password.toString(),
+//                                    ProviderType.BASIC
+//                                )
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                                Toast.makeText(this,"Bienvenido",Toast.LENGTH_SHORT).show()
                             }
                         } else {
                             showAlert()
                         }
                     }
             }
+        }
+
+        binding.buttonGoToRegister.setOnClickListener(){
+            val intent = Intent(this, SignInActivity::class.java)
+            startActivity(intent)
         }
 
         binding.buttonGoogle.setOnClickListener {
@@ -154,9 +138,8 @@ class LoginActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showVerification(name: String, email: String, password: String, provider: ProviderType) {
+    private fun showVerification(email: String, password: String, provider: ProviderType) {
         val intentVerificationActivity = Intent(this, VerificationActivity::class.java).apply {
-            putExtra("name", name)
             putExtra("email", email)
             putExtra("password", password)
             putExtra("provider", provider.name)
@@ -179,7 +162,9 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showVerification(account.displayName ?: "",account.email ?: "", "******" ,ProviderType.GOOGLE)
+                                showVerification(account.email ?: "", "******" ,
+                                    ProviderType.GOOGLE
+                                )
                             } else {
                                 showAlert()
                             }
