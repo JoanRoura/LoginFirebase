@@ -10,15 +10,13 @@
     <item
         android:iconTint="@color/SecondaryColor"
         android:id="@+id/customFragment"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@drawable/edit"
         android:title="Custom" />
 
     <item
         android:iconTint="@color/SecondaryColor"
         android:id="@+id/reportFragment"
-        android:icon="@android:drawable/ic_lock_idle_alarm"
+        android:icon="@drawable/report"
         android:title="Report" />
-
-
 
 </menu>

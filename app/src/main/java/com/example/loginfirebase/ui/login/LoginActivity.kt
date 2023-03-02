@@ -44,15 +44,17 @@ class LoginActivity : AppCompatActivity() {
         bundle.putString("message", "Integracio de Firebase completa ")
         analytics.logEvent("InitScreen", bundle)
 
-        loginViewModel.emailUser.value
 
-        getStrings()
+        // Obtenim les dades del email i el password del usuari, del activity Login
+        val bundleSignIn: Bundle? = intent.extras
+        val email: String? = bundleSignIn?.getString("email")
+        val password: String? = bundleSignIn?.getString("password")
+
+        binding.editTextEmail.setText(email)
+        binding.editTextPassword.setText(password   )
+
         setup()
         session()
-    }
-
-    private fun getStrings() {
-
     }
 
     override fun onStart() {
@@ -63,20 +65,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun session() {
         val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val name = prefs.getString("username", null)
         val email = prefs.getString("email", null)
         val password = prefs.getString("password", null)
-        val provider = prefs.getString("provider", null)
 
-        if (name != null && email != null && password != null && provider != null) {
+        if (email != null && password != null) {
             binding.authLayout.visibility = View.INVISIBLE
-            showVerification(email, password, ProviderType.valueOf(provider))
+            goToHome(email, password)
         }
     }
 
     private fun setup() {
-
-        val db = Firebase.firestore
 
         binding.buttonLogin.setOnClickListener {
             val email = binding.editTextEmail.text
@@ -92,17 +90,12 @@ class LoginActivity : AppCompatActivity() {
 
                             // Comprovar que l'usuari a verificat el correo
                             if (login.result?.user?.isEmailVerified == true) {
-//                                showVerification(
-//                                    login.result?.user?.email ?: "",
-//                                    password.toString(),
-//                                    ProviderType.BASIC
-//                                )
-                                val intent = Intent(this, MainActivity::class.java)
-                                startActivity(intent)
+                                goToHome( login.result?.user?.email ?: "", password.toString())
+
                                 Toast.makeText(this,"Bienvenido",Toast.LENGTH_SHORT).show()
                             }
                         } else {
-                            showAlert()
+                            showAlert("Ha ocurrido un error al iniciar session.")
                         }
                     }
             }
@@ -129,22 +122,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlert() {
+    private fun showAlert(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("No hi ha una conta registrada amb aquestes credencials.")
+        builder.setMessage(message)
         builder.setPositiveButton("Acceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun showVerification(email: String, password: String, provider: ProviderType) {
-        val intentVerificationActivity = Intent(this, VerificationActivity::class.java).apply {
+    private fun goToHome(email: String, password: String) {
+        val intentHomeActivity = Intent(this, MainActivity::class.java).apply {
             putExtra("email", email)
             putExtra("password", password)
-            putExtra("provider", provider.name)
         }
-        startActivity(intentVerificationActivity)
+        startActivity(intentHomeActivity)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -162,17 +154,15 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithCredential(credential)
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
-                                showVerification(account.email ?: "", "******" ,
-                                    ProviderType.GOOGLE
-                                )
+                                goToHome(account.email ?: "", "******");
                             } else {
-                                showAlert()
+                                showAlert("No se ha podido iniciar session con tu cuenta de Google")
                             }
                         }
                 }
 
             } catch (e: ApiException) {
-                showAlert()
+                showAlert("Ha ocurrido un erroe al iniciar session con Google")
             }
         }
 

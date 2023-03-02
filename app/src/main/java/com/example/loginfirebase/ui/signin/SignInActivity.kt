@@ -21,30 +21,39 @@ class SignInActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setup()
+    }
+
+    private fun setup() {
+
         val db = Firebase.firestore
 
         binding.buttonRegister.setOnClickListener {
+            val name = binding.editTextNomUsuari.text
             val email = binding.editTextCorreuUsuari.text
             val password = binding.editTextContrasenyaUsuari.text
 
-            val user = User("", password.toString(), email.toString())
+            val createdUser = User(name.toString(), password.toString(), email.toString())
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener { register ->
                         if (register.isSuccessful) {
-                            showVerification(register.result?.user?.email ?: "", password.toString())
 
-                            db.collection(R.string.users_collection.toString()).document(email.toString())
-                                .set(user)
-                                .addOnSuccessListener {
-                                    Toast.makeText(applicationContext,"S'ha creat el document",Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(applicationContext,"No s'ha pogut crear el document",Toast.LENGTH_SHORT).show()
-                                }
+                            register.result.user?.let { user ->
+                                db.collection(getString(R.string.users_collection)).document(user.uid)
+                                    .set(createdUser)
+                                    .addOnSuccessListener {
+                                        Toast.makeText(applicationContext,"S'ha creat el document",Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(applicationContext,"No s'ha pogut crear el document",Toast.LENGTH_SHORT).show()
+                                    }
+
+                                goToLogin(register.result?.user?.email ?: "", password.toString())
+                            }
                         } else {
-                            showAlert()
+                            showAlert("Ha ocurrido un error al crear la cuenta")
                         }
                     }
             }
@@ -56,19 +65,19 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun showAlert() {
+    private fun showAlert(message: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("S'ha produit un error en la autenticacio de l'usuari.")
+        builder.setMessage(message)
         builder.setPositiveButton("Acceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    private fun showVerification(email: String, password: String) {
+    private fun goToLogin(email: String, password: String) {
         val intentLogin = Intent(this, LoginActivity::class.java).apply {
             putExtra("email", email)
-            putExtra("provider", password)
+            putExtra("password", password)
         }
         startActivity(intentLogin)
     }
