@@ -1,7 +1,3 @@
 package com.example.loginfirebase.model
 
-class User (
-    val name: String? = null,
-    val password: String? = null,
-    val email: String? = null
-    )
+data class User(var name : String ?= null, var email : String ?= null, var password : String ?= null)

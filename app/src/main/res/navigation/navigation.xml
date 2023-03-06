@@ -24,5 +24,13 @@
         android:id="@+id/reportFragment"
         android:name="com.example.loginfirebase.ui.navigation.report.ReportFragment"
         android:label="fragment_report"
-        tools:layout="@layout/fragment_report" />
+        tools:layout="@layout/fragment_report" >
+        <action
+            android:id="@+id/action_reportFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.loginfirebase.ui.navigation.profile.ProfileFragment"
+        android:label="ProfileFragment" />
 </navigation>
