@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.FragmentProfileBinding
-import com.example.loginfirebase.databinding.FragmentTrainingBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage

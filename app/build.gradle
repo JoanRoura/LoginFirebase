@@ -80,6 +80,8 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
     //Lottie
     implementation 'com.airbnb.android:lottie:5.0.3'
+    // Recycler View
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

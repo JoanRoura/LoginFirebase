@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.loginfirebase.R
-import com.example.loginfirebase.database.UserViewModel
 import com.example.loginfirebase.databinding.FragmentTrainingBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 
 class TrainingFragment : Fragment() {
-    lateinit var binding: FragmentTrainingBinding
-    lateinit var userViewModel: UserViewModel
-    lateinit var userRecyclerView: RecyclerView
-
+    private lateinit var binding: FragmentTrainingBinding
+    private lateinit var workoutRecyclerView: RecyclerView
+    private lateinit var trainingViewModel: TrainingViewModel
+    lateinit var trainingAdapter: TrainingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,10 +26,18 @@ class TrainingFragment : Fragment() {
 
         binding = DataBindingUtil.inflate<FragmentTrainingBinding>(inflater, R.layout.fragment_training, container, false);
 
+        trainingViewModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
 
+        workoutRecyclerView = binding.rvWorkout
+        workoutRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        workoutRecyclerView.setHasFixedSize(true)
+        trainingAdapter = TrainingAdapter()
+        workoutRecyclerView.adapter = trainingAdapter
 
+        trainingViewModel.workouts.observe(viewLifecycleOwner, Observer {
+            trainingAdapter.updateWorkoutList(it)
+        })
 
         return binding.root
     }
-
 }

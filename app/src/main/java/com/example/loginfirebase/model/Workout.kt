@@ -1,3 +1,3 @@
 package com.example.loginfirebase.model
 
-data class Workout(var name : String ?= null, var email : String ?= null, var password : String ?= null)
+data class Workout(var name : String ?= null, var number_of_exercises : String ?= null)
