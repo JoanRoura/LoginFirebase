@@ -23,14 +23,14 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this,navController)
         NavigationUI.setupWithNavController(binding.bottomNavigationView,navController)
 
-        val bundle: Bundle? = intent.extras
-        val email: String? = bundle?.getString("email")
-        val password: String? = bundle?.getString("password")
-
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
-        prefs.putString("email", email)
-        prefs.putString("password", password)
-        prefs.apply()
+//        val bundle: Bundle? = intent.extras
+//        val email: String? = bundle?.getString("email")
+//        val password: String? = bundle?.getString("password")
+//
+//        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+//        prefs.putString("email", email)
+//        prefs.putString("password", password)
+//        prefs.apply()
     }
 
 }

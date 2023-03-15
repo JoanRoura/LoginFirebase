@@ -1,15 +1,14 @@
 package com.example.loginfirebase.ui.navigation.training
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,8 +19,8 @@ import com.example.loginfirebase.model.Workout
 class TrainingFragment : Fragment() {
     private lateinit var binding: FragmentTrainingBinding
     private lateinit var workoutRecyclerView: RecyclerView
-    private lateinit var trainingViewModel: TrainingViewModel
-    lateinit var trainingAdapter: TrainingAdapter
+    private val trainingViewModel by activityViewModels<TrainingViewModel>()
+    private lateinit var trainingAdapter: TrainingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,32 +29,39 @@ class TrainingFragment : Fragment() {
 
         binding = DataBindingUtil.inflate<FragmentTrainingBinding>(inflater, R.layout.fragment_training, container, false);
 
-        trainingViewModel = ViewModelProvider(this).get(TrainingViewModel::class.java)
+//        trainingViewModel = ViewModelProvider()
+        trainingAdapter = TrainingAdapter()
+        binding.progressBar2.visibility = View.VISIBLE
+        setRecyclerView()
+        observeCard()
 
-
-
-        initRecyclerView()
 
         return binding.root
     }
 
 
-    private fun initRecyclerView() {
-        workoutRecyclerView = binding.rvWorkout
-        workoutRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        workoutRecyclerView.setHasFixedSize(true)
-        trainingAdapter = TrainingAdapter()
-        workoutRecyclerView.adapter = trainingAdapter
+    private fun setRecyclerView() {
+        val cardRecyclerView = binding.rvWorkout
+        cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        cardRecyclerView.setHasFixedSize(true)
+        cardRecyclerView.adapter = trainingAdapter
+        trainingAdapter?.setItemListener(object: TrainingAdapter.OnItemClickListener {
+            override fun onItemClick(workout: Workout) {
+                trainingViewModel?.setWorkout(workout)
+                view?.findNavController()?.navigate(R.id.action_trainingFragment_to_trainingExercisesFragment);
+            }
+        })
 
-//        val myPostsRv = binding.rvWorkout
-//        myPostsRv.layoutManager = LinearLayoutManager(requireContext())
-//        myPostsRv.setHasFixedSize(true)
-//        myPostsRv.adapter = trainingAdapter
-//        trainingAdapter.setItemListener(object : TrainingAdapter.onItemClickListener {
-//            override fun onItemClick(workout: Workout) {
-//                //val userName = user.userName
-//                Toast.makeText(requireContext(), workout.name, Toast.LENGTH_SHORT).show()
-//            }
-//        })
     }
+
+    private fun observeCard() {
+        trainingViewModel.getWorkoutsDB().observe(requireActivity()) {
+            trainingAdapter?.setListData(it)
+            trainingAdapter?.notifyDataSetChanged()
+            binding.progressBar2.visibility = View.GONE
+        }
+    }
+
+
+
 }
