@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.FragmentProfileBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -19,8 +17,6 @@ import com.google.firebase.storage.ktx.storage
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
-
-    // creating a storage reference
      val storageRef = Firebase.storage.reference;
 
     private var currentFile: Uri? = null
@@ -32,7 +28,7 @@ class ProfileFragment : Fragment() {
 
         val user = Firebase.auth.currentUser
 
-        binding = DataBindingUtil.inflate<FragmentProfileBinding>(inflater, R.layout.fragment_profile, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.buttonSelectImage.setOnClickListener {
             selectImage()

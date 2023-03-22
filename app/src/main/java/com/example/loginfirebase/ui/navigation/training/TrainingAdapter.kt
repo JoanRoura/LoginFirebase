@@ -3,13 +3,15 @@ package com.example.loginfirebase.ui.navigation.training
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.example.loginfirebase.R
 import com.example.loginfirebase.model.Workout
 
-class TrainingAdapter() : RecyclerView.Adapter<TrainingAdapter.TrainingHolder>() {
+class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.TrainingHolder>() {
 
     private lateinit var listener: OnItemClickListener
     private var listData = mutableListOf<Workout>()
@@ -54,6 +56,9 @@ class TrainingAdapter() : RecyclerView.Adapter<TrainingAdapter.TrainingHolder>()
 
             val numberOfExercises = itemView.findViewById<TextView>(R.id.tvNumberOfExercises)
             numberOfExercises.text = workout.number_of_exercises
+
+            val image = itemView.findViewById<ImageView>(R.id.ivItemMuscle)
+            Glide.with(image.context).load(workout.image).into(image)
 
             itemView.setOnClickListener {
                 listener.onItemClick(workout)

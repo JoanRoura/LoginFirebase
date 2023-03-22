@@ -1,14 +1,11 @@
 package com.example.loginfirebase.ui.navigation.training
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,27 +24,25 @@ class TrainingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate<FragmentTrainingBinding>(inflater, R.layout.fragment_training, container, false);
+        binding = FragmentTrainingBinding.inflate(inflater, container, false)
 
 //        trainingViewModel = ViewModelProvider()
         trainingAdapter = TrainingAdapter()
-        binding.progressBar2.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.VISIBLE
         setRecyclerView()
         observeCard()
 
-
         return binding.root
     }
-
 
     private fun setRecyclerView() {
         val cardRecyclerView = binding.rvWorkout
         cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         cardRecyclerView.setHasFixedSize(true)
         cardRecyclerView.adapter = trainingAdapter
-        trainingAdapter?.setItemListener(object: TrainingAdapter.OnItemClickListener {
+        trainingAdapter.setItemListener(object: TrainingAdapter.OnItemClickListener {
             override fun onItemClick(workout: Workout) {
-                trainingViewModel?.setWorkout(workout)
+                trainingViewModel.setWorkout(workout)
                 view?.findNavController()?.navigate(R.id.action_trainingFragment_to_trainingExercisesFragment);
             }
         })
@@ -56,12 +51,9 @@ class TrainingFragment : Fragment() {
 
     private fun observeCard() {
         trainingViewModel.getWorkoutsDB().observe(requireActivity()) {
-            trainingAdapter?.setListData(it)
+            trainingAdapter.setListData(it)
             trainingAdapter?.notifyDataSetChanged()
-            binding.progressBar2.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
         }
     }
-
-
-
 }

@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.example.loginfirebase.R
-import com.example.loginfirebase.databinding.FragmentProfileBinding
 import com.example.loginfirebase.databinding.FragmentReportBinding
 
 class ReportFragment : Fragment() {
@@ -17,15 +15,14 @@ class ReportFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        binding = DataBindingUtil.inflate<FragmentReportBinding>(inflater, R.layout.fragment_report, container, false);
+        binding = FragmentReportBinding.inflate(inflater, container, false)
 
         binding.buttonGoToProfile.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_reportFragment_to_profileFragment);
+            view?.findNavController()?.navigate(R.id.action_reportFragment_to_profileFragment)
         }
 
         return binding.root
     }
-
 }

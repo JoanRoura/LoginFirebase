@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/card_view"
@@ -14,11 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
+
         
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/ivItemMuscle"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/ivItemExercise"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -30,10 +34,10 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvNameWorkout"
             android:textColor="@color/black"
-            android:text="Name of Workout"
+            tools:text="Chest Workout"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/ivItemExercise"
-            android:layout_toRightOf="@+id/ivItemExercise"
+            android:layout_toEndOf="@+id/ivItemMuscle"
+            android:layout_toRightOf="@+id/ivItemMuscle"
             android:layout_alignParentTop="true"
             android:textSize="20dp" />
 
@@ -42,10 +46,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/tvNumberOfExercises"
             android:textColor="@color/black"
-            android:text="Number of Exercises"
-            android:textStyle="bold"
-            android:layout_toEndOf="@+id/ivItemExercise"
-            android:layout_toRightOf="@+id/ivItemExercise"
+            tools:text="7"
+            android:layout_toEndOf="@+id/ivItemMuscle"
+            android:layout_toRightOf="@+id/ivItemMuscle"
             android:layout_below="@+id/tvNameWorkout"
             android:textSize="15dp" />
 
@@ -55,7 +58,6 @@
             android:id="@+id/tvTitleExercise"
             android:textColor="@color/black"
             android:text="exercises"
-            android:textStyle="bold"
             android:layout_toEndOf="@+id/tvNumberOfExercises"
             android:layout_toRightOf="@+id/tvNumberOfExercises"
             android:layout_below="@+id/tvNameWorkout"
