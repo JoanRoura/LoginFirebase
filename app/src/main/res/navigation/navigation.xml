@@ -41,5 +41,14 @@
         android:id="@+id/trainingExercisesFragment"
         android:name="com.example.loginfirebase.ui.navigation.trainingexercises.TrainingExercisesFragment"
         android:label="fragment_training_exercises"
-        tools:layout="@layout/fragment_training_exercises" />
+        tools:layout="@layout/fragment_training_exercises" >
+        <action
+            android:id="@+id/action_trainingExercisesFragment_to_trainingExercisesEditFragment"
+            app:destination="@id/trainingExercisesEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/trainingExercisesEditFragment"
+        android:name="com.example.loginfirebase.ui.navigation.trainingexercisesedit.TrainingExercisesEditFragment"
+        android:label="fragment_training_exercises_edit"
+        tools:layout="@layout/fragment_training_exercises_edit" />
 </navigation>
