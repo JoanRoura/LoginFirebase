@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvSeparatot"
+            android:id="@+id/tvSeparador"
             android:textColor="@color/black"
             android:text="·"
             android:textStyle="bold"
@@ -62,8 +62,8 @@
             android:textColor="@color/black"
             tools:text="Dumbbell"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/tvSeparatot"
-            android:layout_toRightOf="@+id/tvSeparatot"
+            android:layout_toEndOf="@+id/tvSeparador"
+            android:layout_toRightOf="@+id/tvSeparador"
             android:layout_alignParentTop="true"
             android:textSize="16dp" />
 
@@ -89,6 +89,17 @@
             android:layout_below="@+id/tvNameExercise"
             android:layout_marginLeft="4dp"
             android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/bBorrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tvEquipment"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="8dp"
+            android:text="Borrar"
+            android:backgroundTint="@color/SecondaryColor"/>
 
     </RelativeLayout>
 

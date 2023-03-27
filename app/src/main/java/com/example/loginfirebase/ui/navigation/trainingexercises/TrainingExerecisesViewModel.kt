@@ -28,4 +28,8 @@ class TrainingExerecisesViewModel : ViewModel() {
 
         return exercise
     }
+
+    fun deleteExercisesDB(exercise: Exercise) {
+        repository.deleteExercise(exercise)
+    }
 }

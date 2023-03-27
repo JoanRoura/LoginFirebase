@@ -116,7 +116,7 @@
         app:layout_constraintHorizontal_bias="0.052"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvTitlePreparation"
-        tools:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto" />
+        android:text="Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

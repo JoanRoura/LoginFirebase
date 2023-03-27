@@ -48,6 +48,7 @@ class Repository {
                 for (doc in exercises) {
                     listData.add(
                         Exercise(
+                            doc.getString("id"),
                             doc.getString("name"),
                             doc.getString("sets"),
                             doc.getString("equipment"),
@@ -59,9 +60,19 @@ class Repository {
                 exercise.value = listData
             }
             .addOnFailureListener  { exception ->
-                Log.i("casas", "${exception}")
+                Log.i("Error", "${exception}")
             }
 
         return exercise
+    }
+
+    fun deleteExercise(exercise: Exercise) {
+
+        exercise.id?.let {
+            db.collection("exercises").document(it)
+                .delete()
+                .addOnSuccessListener { Log.d(TAG, "S'ha borrat el document") }
+                .addOnFailureListener { e -> Log.w(TAG, "No s'ha pogut borrar el docuement", e) }
+        }
     }
 }

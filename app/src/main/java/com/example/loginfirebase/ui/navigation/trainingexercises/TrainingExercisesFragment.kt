@@ -5,10 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.FragmentTrainingExercisesBinding
 import com.example.loginfirebase.model.Exercise
@@ -25,7 +26,7 @@ class TrainingExercisesFragment : Fragment() {
     private lateinit var trainingExercisesAdapter: TrainingExercisesAdapter
 
     private lateinit var workout : Workout
-    private lateinit var exercise : Exercise
+    private lateinit var exercises : Exercise
 
     private lateinit var dialog : BottomSheetDialog
 
@@ -40,13 +41,11 @@ class TrainingExercisesFragment : Fragment() {
         binding.tvTitleTrainingExercisesFragment.text = workout.name
         binding.tvNumberExercisesWorkout.text = workout.number_of_exercises
 
-        trainingExercisesAdapter = TrainingExercisesAdapter()
+        trainingExercisesAdapter = TrainingExercisesAdapter( onClickDelete = { exercise -> onDeletedItem(exercise) })
 
         setRecyclerView()
         observeCard(workout)
         goTo()
-
-        exercise = trainingExercisesViewModel.exercises!!
 
         return binding.root
     }
@@ -67,6 +66,8 @@ class TrainingExercisesFragment : Fragment() {
             override fun onItemClick(exercise: Exercise) {
                 trainingExercisesViewModel.setWorkoutExercises(exercise)
 
+                exercises = trainingExercisesViewModel.exercises!!
+
                 showBottomSheet()
             }
         })
@@ -83,13 +84,16 @@ class TrainingExercisesFragment : Fragment() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet, null)
 
         val nameExercise = dialogView.findViewById<TextView>(R.id.tvNameExercise)
-        nameExercise.text = exercise.name
+        nameExercise.text = exercises.name
 
         val focusAreaxercise = dialogView.findViewById<TextView>(R.id.tvFocusAreaExercise)
-        focusAreaxercise.text = exercise.focus_area
+        focusAreaxercise.text = exercises.focus_area
 
         val equipmentExercise = dialogView.findViewById<TextView>(R.id.tvEquipmentExercise)
-        equipmentExercise.text = exercise.equipment
+        equipmentExercise.text = exercises.equipment
+
+        val imageExercise = dialogView.findViewById<ImageView>(R.id.ivExercise)
+        Glide.with(imageExercise.context).load(exercises.image).into(imageExercise)
 
         // TODO: Implementar decripcio als exercisis en el firestore
         // val descriptionExercise = dialogView.findViewById<TextView>(R.id.tvDescriptionExercise)
@@ -100,5 +104,7 @@ class TrainingExercisesFragment : Fragment() {
         dialog.show()
     }
 
-
+    private fun onDeletedItem(exercise: Exercise) {
+        trainingExercisesViewModel.deleteExercisesDB(exercise)
+    }
 }
