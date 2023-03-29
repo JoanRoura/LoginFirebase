@@ -20,11 +20,6 @@ class TrainingExercisesAdapter(private val onClickDelete: (Exercise) -> Unit) : 
         fun onItemClick(exercise: Exercise)
     }
 
-    fun onDeletedItem(data: MutableList<Exercise>) {
-
-
-    }
-
     fun setListData(data: MutableList<Exercise>) {
         listData = data
     }
@@ -35,7 +30,7 @@ class TrainingExercisesAdapter(private val onClickDelete: (Exercise) -> Unit) : 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingExercisesHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_exercise, parent, false)
+            .inflate(R.layout.card_exercise_training, parent, false)
 
         return TrainingExercisesHolder(view)
     }

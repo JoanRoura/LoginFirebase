@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
@@ -45,16 +46,10 @@ class TrainingExercisesFragment : Fragment() {
 
         setRecyclerView()
         observeCard(workout)
-        goTo()
 
         return binding.root
     }
 
-    private fun goTo() {
-        binding.bEditWorkout.setOnClickListener {
-
-        }
-    }
 
     private fun setRecyclerView() {
         val cardRecyclerView = binding.rvExercises
@@ -106,5 +101,15 @@ class TrainingExercisesFragment : Fragment() {
 
     private fun onDeletedItem(exercise: Exercise) {
         trainingExercisesViewModel.deleteExercisesDB(exercise)
+    }
+
+    private fun showEdit() {
+        val cardExercise = layoutInflater.inflate(R.layout.card_exercise_training, null)
+        val bBorrar = cardExercise.findViewById<Button>(R.id.bBorrar)
+
+        binding.bEditWorkout.setOnClickListener {
+            bBorrar.visibility = View.VISIBLE
+            trainingExercisesAdapter.notifyDataSetChanged()
+        }
     }
 }
