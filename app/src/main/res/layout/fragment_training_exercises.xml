@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/TerciaryColor"
-    tools:context=".ui.navigation.trainingexercises.TrainingExercisesFragment"
+    tools:context=".ui.navigation.training.trainingexercises.TrainingExercisesFragment"
     android:padding="16dp">
 
     <TextView

@@ -39,7 +39,7 @@
         android:label="ProfileFragment" />
     <fragment
         android:id="@+id/trainingExercisesFragment"
-        android:name="com.example.loginfirebase.ui.navigation.trainingexercises.TrainingExercisesFragment"
+        android:name="com.example.loginfirebase.ui.navigation.training.trainingexercises.TrainingExercisesFragment"
         android:label="fragment_training_exercises"
         tools:layout="@layout/fragment_training_exercises" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/trainingExercisesEditFragment"
-        android:name="com.example.loginfirebase.ui.navigation.trainingexercisesedit.TrainingExercisesEditFragment"
+        android:name="com.example.loginfirebase.ui.navigation.training.trainingexercisesedit.TrainingExercisesEditFragment"
         android:label="fragment_training_exercises_edit"
         tools:layout="@layout/fragment_training_exercises_edit" />
 </navigation>

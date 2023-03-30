@@ -1,4 +1,4 @@
-package com.example.loginfirebase.ui.navigation.trainingexercises
+package com.example.loginfirebase.ui.navigation.training.trainingexercises
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -57,7 +57,8 @@ class TrainingExercisesFragment : Fragment() {
         cardRecyclerView.setHasFixedSize(true)
         cardRecyclerView.adapter = trainingExercisesAdapter
 
-        trainingExercisesAdapter.setItemListener(object : TrainingExercisesAdapter.OnItemClickListener {
+        trainingExercisesAdapter.setItemListener(object :
+            TrainingExercisesAdapter.OnItemClickListener {
             override fun onItemClick(exercise: Exercise) {
                 trainingExercisesViewModel.setWorkoutExercises(exercise)
 

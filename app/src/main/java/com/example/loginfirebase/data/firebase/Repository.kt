@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.loginfirebase.model.CustomWorkout
 import com.example.loginfirebase.model.Exercise
 import com.example.loginfirebase.model.Workout
 import com.google.firebase.firestore.ktx.firestore
@@ -12,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 class Repository {
     val db = Firebase.firestore
 
+    // Endpoints Workout
     fun getWorkouts() : LiveData<MutableList<Workout>> {
         val workout = MutableLiveData<MutableList<Workout>>()
 
@@ -36,6 +38,7 @@ class Repository {
         return workout
     }
 
+    // Endpoints exercises
     fun getExercises(workout: Workout) : LiveData<MutableList<Exercise>> {
         val exercise =  MutableLiveData<MutableList<Exercise>>()
 
@@ -75,4 +78,28 @@ class Repository {
                 .addOnFailureListener { e -> Log.w(TAG, "No s'ha pogut borrar el docuement", e) }
         }
     }
+
+    // Endpoints Custom Workouts
+    fun getCustomWorkouts() : LiveData<MutableList<CustomWorkout>> {
+        val customWorkout = MutableLiveData<MutableList<CustomWorkout>>()
+
+        db.collection("custom_workouts")
+            .get()
+            .addOnSuccessListener { customWorkouts ->
+                val listData = mutableListOf<CustomWorkout>()
+
+                for (doc in customWorkouts) {
+                    listData.add(
+                        CustomWorkout(
+                            doc.getString("exercises") as MutableList<String>,
+                            doc.getString("name")!!
+                        )
+                    )
+                }
+                customWorkout.value = listData
+            }
+        return customWorkout
+    }
+
+
 }

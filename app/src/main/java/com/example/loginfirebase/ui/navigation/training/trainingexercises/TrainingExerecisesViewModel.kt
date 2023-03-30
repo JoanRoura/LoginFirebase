@@ -1,4 +1,4 @@
-package com.example.loginfirebase.ui.navigation.trainingexercises
+package com.example.loginfirebase.ui.navigation.training.trainingexercises
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

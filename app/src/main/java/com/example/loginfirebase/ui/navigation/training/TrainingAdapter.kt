@@ -30,7 +30,7 @@ class TrainingAdapter : RecyclerView.Adapter<TrainingAdapter.TrainingHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrainingHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_layout, parent, false)
+            .inflate(R.layout.card_workout, parent, false)
 
         return TrainingHolder(view)
     }

@@ -1,4 +1,4 @@
-package com.example.loginfirebase.ui.navigation.trainingexercisesedit
+package com.example.loginfirebase.ui.navigation.training.trainingexercisesedit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.loginfirebase.databinding.FragmentTrainingExercisesEditBinding
 import com.example.loginfirebase.model.Exercise
-import com.example.loginfirebase.ui.navigation.trainingexercises.TrainingExerecisesViewModel
+import com.example.loginfirebase.ui.navigation.training.trainingexercises.TrainingExerecisesViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.example.loginfirebase.R
 

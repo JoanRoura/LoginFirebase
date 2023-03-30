@@ -16,9 +16,8 @@ import com.example.loginfirebase.model.Workout
 
 class TrainingFragment : Fragment() {
     private lateinit var binding: FragmentTrainingBinding
-    private lateinit var workoutRecyclerView: RecyclerView
-    private val trainingViewModel by activityViewModels<TrainingViewModel>()
     private lateinit var trainingAdapter: TrainingAdapter
+    private val trainingViewModel by activityViewModels<TrainingViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +28,6 @@ class TrainingFragment : Fragment() {
         binding = FragmentTrainingBinding.inflate(inflater, container, false)
         (activity as AppCompatActivity).supportActionBar?.hide()
 
-
-//        trainingViewModel = ViewModelProvider()
         trainingAdapter = TrainingAdapter()
         binding.progressBar.visibility = View.VISIBLE
         setRecyclerView()
