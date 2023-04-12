@@ -33,9 +33,9 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.CustomHolder>() {
     }
 
     override fun onBindViewHolder(holder: CustomHolder, position: Int) {
-        val customCard = listData[position]
+        val customWorkoutCard = listData[position]
 
-        holder.bindView(customCard)
+        holder.bindView(customWorkoutCard)
     }
 
     override fun getItemCount(): Int {
@@ -50,6 +50,9 @@ class CustomAdapter : RecyclerView.Adapter<CustomAdapter.CustomHolder>() {
         fun bindView(customWorkout: CustomWorkout) {
             val name = itemView.findViewById<TextView>(R.id.tvNameWorkout)
             name.text = customWorkout.name
+
+            val numberOfExercises = itemView.findViewById<TextView>(R.id.tvNumberOfExercises)
+            numberOfExercises.text = customWorkout.exercises.size.toString()
 
             itemView.setOnClickListener {
                 listener.onItemClick(customWorkout)

@@ -33,7 +33,7 @@ class SignInActivity : AppCompatActivity() {
             val email = binding.editTextCorreuUsuari.text
             val password = binding.editTextContrasenyaUsuari.text
 
-            val createdUser = User(name.toString(), password.toString(), email.toString())
+            val createdUser = User(name.toString(), email.toString(), password.toString())
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.toString(), password.toString())

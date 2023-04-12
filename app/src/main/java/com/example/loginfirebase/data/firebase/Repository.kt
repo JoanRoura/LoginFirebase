@@ -89,17 +89,51 @@ class Repository {
                 val listData = mutableListOf<CustomWorkout>()
 
                 for (doc in customWorkouts) {
+                    val exercises = doc.get("exercises") as? MutableList<String> ?: emptyList()
+                    val name = doc.getString("name") ?: ""
+
+                    Log.i("Hola", "$exercises, $name ")
+
                     listData.add(
                         CustomWorkout(
-                            doc.getString("exercises") as MutableList<String>,
-                            doc.getString("name")!!
+                            exercises.toMutableList(),
+                            name!!
                         )
                     )
                 }
+
                 customWorkout.value = listData
             }
         return customWorkout
     }
 
+    fun getExercisesCustomWorkout(customWorkout: CustomWorkout) : LiveData<MutableList<Exercise>> {
+        val exercisesCustomWorkout = MutableLiveData<MutableList<Exercise>>()
 
+        db.collection("exercises")
+            .whereArrayContainsAny("id", customWorkout.exercises)
+            .get()
+            .addOnSuccessListener { exercises ->
+                val listData = mutableListOf<Exercise>()
+
+                for (doc in exercises) {
+                    listData.add(
+                        Exercise(
+                            doc.getString("id"),
+                            doc.getString("name"),
+                            doc.getString("sets"),
+                            doc.getString("equipment"),
+                            doc.getString("focus_area"),
+                            doc.getString("image")
+                        )
+                    )
+                }
+                exercisesCustomWorkout.value = listData
+            }
+            .addOnFailureListener  { exception ->
+                Log.i("Error", "${exception}")
+            }
+
+        return exercisesCustomWorkout
+    }
 }

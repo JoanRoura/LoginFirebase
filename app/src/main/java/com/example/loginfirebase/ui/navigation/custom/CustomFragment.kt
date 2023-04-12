@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.FragmentCustomBinding
 import com.example.loginfirebase.model.CustomWorkout
-import com.example.loginfirebase.model.Workout
-import com.example.loginfirebase.ui.navigation.training.TrainingAdapter
 
 class CustomFragment : Fragment() {
     private lateinit var binding: FragmentCustomBinding
@@ -26,6 +22,8 @@ class CustomFragment : Fragment() {
 
         binding = FragmentCustomBinding.inflate(inflater, container, false)
 
+        customAdapter = CustomAdapter()
+        binding.progressBar2.visibility = View.VISIBLE
         setRecyclerView()
         observeCard()
 
@@ -37,6 +35,9 @@ class CustomFragment : Fragment() {
         cardRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         cardRecyclerView.setHasFixedSize(true)
         cardRecyclerView.adapter = customAdapter
+        //                        val exercisesList = doc.get("exercises") as MutableList<String>
+//    exercisesList
+
         customAdapter.setItemListener(object : CustomAdapter.OnItemClickListener {
             override fun onItemClick(customWorkout: CustomWorkout) {
                 customViewModel.setCustomWorkout(customWorkout)
@@ -48,6 +49,7 @@ class CustomFragment : Fragment() {
         customViewModel.getCustomWorkoutsDB().observe(requireActivity()) {
             customAdapter.setListData(it)
             customAdapter?.notifyDataSetChanged()
+            binding.progressBar2.visibility = View.GONE
         }
     }
 }
