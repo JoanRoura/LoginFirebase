@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.loginfirebase.R
 import com.example.loginfirebase.databinding.FragmentCustomBinding
 import com.example.loginfirebase.model.CustomWorkout
 
@@ -27,6 +30,10 @@ class CustomFragment : Fragment() {
         setRecyclerView()
         observeCard()
 
+        binding.bAddCustomWorkout.setOnClickListener {
+            view?.findNavController()?.navigate(R.id.action_customFragment_to_newCustomFragment)
+        }
+
         return binding.root
     }
 
@@ -41,6 +48,7 @@ class CustomFragment : Fragment() {
         customAdapter.setItemListener(object : CustomAdapter.OnItemClickListener {
             override fun onItemClick(customWorkout: CustomWorkout) {
                 customViewModel.setCustomWorkout(customWorkout)
+                view?.findNavController()?.navigate(R.id.action_customFragment_to_customExercisesFragment)
             }
         })
     }

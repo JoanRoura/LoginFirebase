@@ -30,9 +30,9 @@
             android:scaleType="centerCrop" />
 
         <TextView
+            android:id="@+id/tvNameCustomWorkout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvNameExercise"
             android:textColor="@color/black"
             tools:text="Incline Bench Press"
             android:textStyle="bold"
@@ -42,23 +42,23 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/tvSeparador"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvSeparador"
             android:textColor="@color/black"
             android:text="·"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/tvNameExercise"
-            android:layout_toRightOf="@+id/tvNameExercise"
+            android:layout_toEndOf="@+id/tvNameCustomWorkout"
+            android:layout_toRightOf="@+id/tvNameCustomWorkout"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/tvEquipment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvEquipment"
             android:textColor="@color/black"
             tools:text="Dumbbell"
             android:textStyle="bold"
@@ -68,27 +68,63 @@
             android:textSize="16dp" />
 
         <TextView
+            android:id="@+id/tvSetsExercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTitleSetsExercise"
             android:textColor="@color/black"
-            android:text="Sets:"
+            tools:text="4"
+            android:layout_below="@+id/tvNameCustomWorkout"
             android:layout_toEndOf="@+id/ivItemExercise"
             android:layout_toRightOf="@+id/ivItemExercise"
-            android:layout_below="@+id/tvNameExercise"
             android:textSize="14dp" />
 
         <TextView
+            android:id="@+id/tvTitleSetsExercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvSetsExercise"
+            android:layout_below="@+id/tvNameCustomWorkout"
+            android:layout_toRightOf="@+id/tvSetsExercise"
+            android:text="Sets"
             android:textColor="@color/black"
-            tools:text="4x12"
+            android:textSize="14dp"
+            android:layout_marginLeft="4dp"/>
+
+
+        <TextView
+            android:id="@+id/tvTitleX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="x"
+            android:layout_below="@+id/tvNameCustomWorkout"
             android:layout_toEndOf="@+id/tvTitleSetsExercise"
             android:layout_toRightOf="@+id/tvTitleSetsExercise"
-            android:layout_below="@+id/tvNameExercise"
-            android:layout_marginLeft="4dp"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:layout_marginLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/tvRepsExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            tools:text="8"
+            android:layout_below="@+id/tvNameCustomWorkout"
+            android:layout_toEndOf="@+id/tvTitleX"
+            android:layout_toRightOf="@+id/tvTitleX"
+            android:textSize="14dp"
+            android:layout_marginLeft="4dp"/>
+
+        <TextView
+            android:id="@+id/tvTitleRepsExercise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:text="reps"
+            android:layout_below="@+id/tvNameCustomWorkout"
+            android:layout_toEndOf="@+id/tvRepsExercise"
+            android:layout_toRightOf="@+id/tvRepsExercise"
+            android:textSize="14dp"
+            android:layout_marginLeft="4dp"/>
 
         <Button
             android:id="@+id/bBorrar"

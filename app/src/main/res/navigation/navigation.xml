@@ -14,7 +14,14 @@
         android:id="@+id/customFragment"
         android:name="com.example.loginfirebase.ui.navigation.custom.CustomFragment"
         android:label="fragment_custom"
-        tools:layout="@layout/fragment_custom" />
+        tools:layout="@layout/fragment_custom" >
+        <action
+            android:id="@+id/action_customFragment_to_customExercisesFragment"
+            app:destination="@id/customExercisesFragment" />
+        <action
+            android:id="@+id/action_customFragment_to_newCustomFragment"
+            app:destination="@id/newCustomFragment" />
+    </fragment>
     <fragment
         android:id="@+id/trainingFragment"
         android:name="com.example.loginfirebase.ui.navigation.training.TrainingFragment"
@@ -51,4 +58,14 @@
         android:name="com.example.loginfirebase.ui.navigation.training.trainingexercisesedit.TrainingExercisesEditFragment"
         android:label="fragment_training_exercises_edit"
         tools:layout="@layout/fragment_training_exercises_edit" />
+    <fragment
+        android:id="@+id/customExercisesFragment"
+        android:name="com.example.loginfirebase.ui.navigation.custom.customexercises.CustomExercisesFragment"
+        android:label="fragment_custom_exercises"
+        tools:layout="@layout/fragment_custom_exercises" />
+    <fragment
+        android:id="@+id/newCustomFragment"
+        android:name="com.example.loginfirebase.ui.navigation.custom.newcustom.NewCustomFragment"
+        android:label="fragment_new_custom"
+        tools:layout="@layout/fragment_new_custom" />
 </navigation>

@@ -79,7 +79,7 @@ class TrainingExercisesFragment : Fragment() {
     private fun showBottomSheet() {
         val dialogView = layoutInflater.inflate(R.layout.bottom_sheet, null)
 
-        val nameExercise = dialogView.findViewById<TextView>(R.id.tvNameExercise)
+        val nameExercise = dialogView.findViewById<TextView>(R.id.tvNameCustomWorkout)
         nameExercise.text = exercises.name
 
         val focusAreaxercise = dialogView.findViewById<TextView>(R.id.tvFocusAreaExercise)

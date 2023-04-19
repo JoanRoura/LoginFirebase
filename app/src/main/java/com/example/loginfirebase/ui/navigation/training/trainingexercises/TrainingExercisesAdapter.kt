@@ -51,11 +51,14 @@ class TrainingExercisesAdapter(private val onClickDelete: (Exercise) -> Unit) : 
 
     inner class TrainingExercisesHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bindView(exercise: Exercise, onClickDelete: (Exercise) -> Unit) {
-            val name = itemView.findViewById<TextView>(R.id.tvNameExercise)
+            val name = itemView.findViewById<TextView>(R.id.tvNameCustomWorkout)
             name.text = exercise.name
 
             val sets = itemView.findViewById<TextView>(R.id.tvSetsExercise)
             sets.text = exercise.sets
+
+            val reps = itemView.findViewById<TextView>(R.id.tvRepsExercise)
+            reps.text = exercise.reps
 
             val equipment = itemView.findViewById<TextView>(R.id.tvEquipment)
             equipment.text = exercise.equipment

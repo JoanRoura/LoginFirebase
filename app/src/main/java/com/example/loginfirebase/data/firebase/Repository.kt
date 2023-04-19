@@ -14,7 +14,7 @@ class Repository {
     val db = Firebase.firestore
 
     // Endpoints Workout
-    fun getWorkouts() : LiveData<MutableList<Workout>> {
+    fun getWorkouts(): LiveData<MutableList<Workout>> {
         val workout = MutableLiveData<MutableList<Workout>>()
 
         db.collection("workouts")
@@ -39,8 +39,8 @@ class Repository {
     }
 
     // Endpoints exercises
-    fun getExercises(workout: Workout) : LiveData<MutableList<Exercise>> {
-        val exercise =  MutableLiveData<MutableList<Exercise>>()
+    fun getExercisesWorkout(workout: Workout): LiveData<MutableList<Exercise>> {
+        val exercise = MutableLiveData<MutableList<Exercise>>()
 
         db.collection("exercises")
             .whereEqualTo("focus_area", workout.focus_area)
@@ -54,6 +54,7 @@ class Repository {
                             doc.getString("id"),
                             doc.getString("name"),
                             doc.getString("sets"),
+                            doc.getString("reps"),
                             doc.getString("equipment"),
                             doc.getString("focus_area"),
                             doc.getString("image")
@@ -62,7 +63,7 @@ class Repository {
                 }
                 exercise.value = listData
             }
-            .addOnFailureListener  { exception ->
+            .addOnFailureListener { exception ->
                 Log.i("Error", "${exception}")
             }
 
@@ -79,8 +80,39 @@ class Repository {
         }
     }
 
+    fun getExercises(): LiveData<MutableList<Exercise>> {
+        val exercise = MutableLiveData<MutableList<Exercise>>()
+
+        db.collection("exercises")
+            .get()
+            .addOnSuccessListener { exercises ->
+                val listData = mutableListOf<Exercise>()
+
+                for (doc in exercises) {
+                    listData.add(
+                        Exercise(
+                            doc.getString("id")!!,
+                            doc.getString("name")!!,
+                            doc.getString("sets")!!,
+                            doc.getString("reps")!!,
+                            doc.getString("equipment")!!,
+                            doc.getString("focus_area")!!,
+                            doc.getString("image")!!
+                        )
+                    )
+                }
+                exercise.value = listData
+            }
+            .addOnFailureListener { exception ->
+                Log.i("Error", "${exception}")
+            }
+
+        return exercise
+
+    }
+
     // Endpoints Custom Workouts
-    fun getCustomWorkouts() : LiveData<MutableList<CustomWorkout>> {
+    fun getCustomWorkouts(): LiveData<MutableList<CustomWorkout>> {
         val customWorkout = MutableLiveData<MutableList<CustomWorkout>>()
 
         db.collection("custom_workouts")
@@ -91,8 +123,6 @@ class Repository {
                 for (doc in customWorkouts) {
                     val exercises = doc.get("exercises") as? MutableList<String> ?: emptyList()
                     val name = doc.getString("name") ?: ""
-
-                    Log.i("Hola", "$exercises, $name ")
 
                     listData.add(
                         CustomWorkout(
@@ -107,33 +137,41 @@ class Repository {
         return customWorkout
     }
 
-    fun getExercisesCustomWorkout(customWorkout: CustomWorkout) : LiveData<MutableList<Exercise>> {
+    fun getExercisesCustomWorkout(customWorkout: CustomWorkout): LiveData<MutableList<Exercise>> {
         val exercisesCustomWorkout = MutableLiveData<MutableList<Exercise>>()
 
         db.collection("exercises")
-            .whereArrayContainsAny("id", customWorkout.exercises)
             .get()
             .addOnSuccessListener { exercises ->
                 val listData = mutableListOf<Exercise>()
 
                 for (doc in exercises) {
-                    listData.add(
-                        Exercise(
-                            doc.getString("id"),
-                            doc.getString("name"),
-                            doc.getString("sets"),
-                            doc.getString("equipment"),
-                            doc.getString("focus_area"),
-                            doc.getString("image")
-                        )
-                    )
+                    for (exercise in customWorkout.exercises) {
+                        if (doc.getString("id") == exercise) {
+                            listData.add(
+                                Exercise(
+                                    doc.getString("id"),
+                                    doc.getString("name"),
+                                    doc.getString("sets"),
+                                    doc.getString("reps"),
+                                    doc.getString("equipment"),
+                                    doc.getString("focus_area"),
+                                    doc.getString("image")
+                                )
+                            )
+                        }
+                    }
                 }
                 exercisesCustomWorkout.value = listData
             }
-            .addOnFailureListener  { exception ->
+            .addOnFailureListener { exception ->
                 Log.i("Error", "${exception}")
             }
 
         return exercisesCustomWorkout
+    }
+
+    fun createCustomWorkoutDB() {
+
     }
 }

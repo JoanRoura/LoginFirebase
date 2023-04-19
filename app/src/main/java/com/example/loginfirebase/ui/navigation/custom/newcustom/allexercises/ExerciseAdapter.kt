@@ -1,4 +1,4 @@
-package com.example.loginfirebase.ui.navigation.custom.customexercises
+package com.example.loginfirebase.ui.navigation.custom.newcustom.allexercises
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.loginfirebase.R
 import com.example.loginfirebase.model.Exercise
 
-class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.CustomExercisesHolder>() {
+class ExerciseAdapter : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>()  {
 
     private lateinit var listener: OnItemClickListener
     private var listData = mutableListOf<Exercise>()
@@ -28,17 +28,17 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
         this.listener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomExercisesHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_exercise_training, parent, false)
+            .inflate(R.layout.card_exercise, parent, false)
 
-        return CustomExercisesHolder(view)
+        return ExerciseHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CustomExercisesHolder, position: Int) {
-        val customCard = listData[position]
+    override fun onBindViewHolder(holder: ExerciseHolder, position: Int) {
+        val exerciseCard = listData[position]
 
-        holder.bindView(customCard)
+        holder.bindView(exerciseCard)
     }
 
     override fun getItemCount(): Int {
@@ -49,24 +49,23 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
         }
     }
 
-    inner class CustomExercisesHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class ExerciseHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         fun bindView(exercise: Exercise) {
-            val name = itemView.findViewById<TextView>(R.id.tvNameCustomWorkout)
+            val name = itemView.findViewById<TextView>(R.id.tvNameExercise)
             name.text = exercise.name
-
-            val sets = itemView.findViewById<TextView>(R.id.tvSetsExercise)
-            sets.text = exercise.sets
-
-            val reps = itemView.findViewById<TextView>(R.id.tvRepsExercise)
-            reps.text = exercise.reps
-
-            val equipment = itemView.findViewById<TextView>(R.id.tvEquipment)
+            Log.e("bonatarda","$exercise")
+            val equipment = itemView.findViewById<TextView>(R.id.tvEquipmentOfExercise)
             equipment.text = exercise.equipment
+
+            val focusArea = itemView.findViewById<TextView>(R.id.tvFocusAreaExercise)
+            focusArea.text = exercise.focus_area
 
             val image = itemView.findViewById<ImageView>(R.id.ivItemExercise)
             Glide.with(image.context).load(exercise.image).into(image)
 
-            Log.i("beqfijkwfew", "${exercise.image}")
+
         }
     }
+
+
 }

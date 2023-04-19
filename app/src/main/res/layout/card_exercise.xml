@@ -7,11 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/card_exercise"
-    android:layout_margin="12dp"
+    android:layout_margin="6dp"
     card_view:cardBackgroundColor="#FFF"
     card_view:cardCornerRadius="20dp"
-    card_view:cardElevation="6dp"
-    card_view:contentPadding="4dp">
+    card_view:cardElevation="6dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,10 +19,10 @@
 
         <RadioButton
             android:id="@+id/radioButton"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="14dp" />
 
         <ImageView
             android:id="@+id/ivItemExercise"
@@ -78,7 +77,7 @@
             tools:text="Barbell" />
 
         <TextView
-            android:id="@+id/tvTitleSetsExercise"
+            android:id="@+id/tvFocusAreaExercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvNameExercise"
