@@ -53,7 +53,7 @@ class ExerciseAdapter : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>()  
         fun bindView(exercise: Exercise) {
             val name = itemView.findViewById<TextView>(R.id.tvNameExercise)
             name.text = exercise.name
-            Log.e("bonatarda","$exercise")
+
             val equipment = itemView.findViewById<TextView>(R.id.tvEquipmentOfExercise)
             equipment.text = exercise.equipment
 
@@ -63,9 +63,10 @@ class ExerciseAdapter : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>()  
             val image = itemView.findViewById<ImageView>(R.id.ivItemExercise)
             Glide.with(image.context).load(exercise.image).into(image)
 
+            itemView.setOnClickListener {
+                listener.onItemClick(exercise)
+            }
 
         }
     }
-
-
 }

@@ -2,6 +2,7 @@ package com.example.loginfirebase.ui.navigation.custom.customexercises
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,7 +48,10 @@ class CustomExercisesFragment : Fragment() {
         customExercisesAdapter = CustomExercisesAdapter()
 
         setRecyclerView()
+
         observeCard(customWorkout)
+
+
 
         return binding.root
     }
@@ -61,8 +65,10 @@ class CustomExercisesFragment : Fragment() {
         customExercisesAdapter.setItemListener(object :
             CustomExercisesAdapter.OnItemClickListener {
             override fun onItemClick(exercise: Exercise) {
+                Log.i("Vewvewvew", "$exercise")
                 customExercisesViewModel.setCustomExercises(exercise)
                 exercises = customExercisesViewModel.exercises!!
+
             }
         })
     }

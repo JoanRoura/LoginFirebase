@@ -26,4 +26,9 @@ class ExercisesViewModel: ViewModel() {
 
         return exercise
     }
+
+//    fun getCustomWorkout():LiveData<MutableList<Exercise>>{
+//        val exerciceCustom = exercises
+//        return exerciceCustom
+//    }
 }

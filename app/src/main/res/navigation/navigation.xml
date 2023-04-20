@@ -67,5 +67,9 @@
         android:id="@+id/newCustomFragment"
         android:name="com.example.loginfirebase.ui.navigation.custom.newcustom.NewCustomFragment"
         android:label="fragment_new_custom"
-        tools:layout="@layout/fragment_new_custom" />
+        tools:layout="@layout/fragment_new_custom" >
+        <action
+            android:id="@+id/action_newCustomFragment_to_customFragment"
+            app:destination="@id/customFragment" />
+    </fragment>
 </navigation>
