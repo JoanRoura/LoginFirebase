@@ -26,7 +26,7 @@ class CustomExercisesFragment : Fragment() {
     private lateinit var customExercisesAdapter: CustomExercisesAdapter
 
     private lateinit var customWorkout: CustomWorkout
-    private lateinit var exercises : Exercise
+//    private lateinit var exercises : Exercise
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -34,24 +34,18 @@ class CustomExercisesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val formattedDate = currentDate.format(formatter)
-
         binding = FragmentCustomExercisesBinding.inflate(inflater, container, false)
 
         customWorkout = customViewModel.customWorkout!!
 
         binding.tvNameCustomWorkout.text = customWorkout.name
-        binding.tvDateCreatedCustom.text = formattedDate.toString()
+        binding.tvDateCreatedCustom.text = customWorkout.creation_date
 
         customExercisesAdapter = CustomExercisesAdapter()
 
         setRecyclerView()
 
         observeCard(customWorkout)
-
-
 
         return binding.root
     }
@@ -66,16 +60,15 @@ class CustomExercisesFragment : Fragment() {
             CustomExercisesAdapter.OnItemClickListener {
             override fun onItemClick(exercise: Exercise) {
                 Log.i("Vewvewvew", "$exercise")
-                customExercisesViewModel.setCustomExercises(exercise)
-                exercises = customExercisesViewModel.exercises!!
+
 
             }
         })
     }
 
     private fun observeCard(customWorkout: CustomWorkout) {
-        customExercisesViewModel.getExercisesCustomDB(customWorkout).observe(requireActivity()) {
-            customExercisesAdapter.setListData(it)
+        customExercisesViewModel.getExercisesCustomDB(customWorkout).observe(requireActivity()) { exercises ->
+            customExercisesAdapter.setListData(exercises)
             customExercisesAdapter.notifyDataSetChanged()
         }
     }

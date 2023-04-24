@@ -24,6 +24,15 @@ class ExerciseAdapter : RecyclerView.Adapter<ExerciseAdapter.ExerciseHolder>()  
         listData = data
     }
 
+    fun setExercise(exercise: Exercise) {
+        listData.add(exercise)
+    }
+
+
+    fun getListData(): MutableList<Exercise> {
+        return listData
+    }
+
     fun setItemListener(listener: OnItemClickListener) {
         this.listener = listener
     }

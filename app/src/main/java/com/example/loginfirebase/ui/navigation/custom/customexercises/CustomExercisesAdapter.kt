@@ -3,8 +3,10 @@ package com.example.loginfirebase.ui.navigation.custom.customexercises
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.loginfirebase.R
@@ -64,6 +66,25 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
 
             val image = itemView.findViewById<ImageView>(R.id.ivItemExercise)
             Glide.with(image.context).load(exercise.image).into(image)
+
+//            val constraintEditExercise = itemView.findViewById<View>(R.id.constraintEditExercise)
+//            val titleEditSets = itemView.findViewById<TextView>(R.id.tvTitleEditSets)
+//            val titleEditReps = itemView.findViewById<TextView>(R.id.tvTitleEditReps)
+//            val editSets = itemView.findViewById<EditText>(R.id.etEditSets)
+//            val editReps = itemView.findViewById<EditText>(R.id.etEditReps)
+//
+//            val isExpandable : Boolean? = exercise.isExpandable
+//
+//            titleEditSets.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
+//            titleEditReps.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
+//            editSets.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
+//            editReps.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
+//
+//            constraintEditExercise.setOnClickListener {
+//                exercise.isExpandable = !exercise.isExpandable!!
+//                notifyDataSetChanged()
+////                notifyItemChanged(absoluteAdapterPosition)
+//            }
         }
     }
 }

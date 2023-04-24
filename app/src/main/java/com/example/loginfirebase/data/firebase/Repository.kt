@@ -123,11 +123,15 @@ class Repository {
                 for (doc in customWorkouts) {
                     val exercises = doc.get("exercises") as? MutableList<String> ?: emptyList()
                     val name = doc.getString("name") ?: ""
+                    val creatorUser = doc.getString("creator_user") ?: ""
+                    val creationDate = doc.getString("creation_date") ?: ""
 
                     listData.add(
                         CustomWorkout(
+                            creatorUser,
+                            name!!,
                             exercises.toMutableList(),
-                            name!!
+                            creationDate
                         )
                     )
                 }
