@@ -6,12 +6,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.loginfirebase.model.CustomWorkout
 import com.example.loginfirebase.model.Exercise
+import com.example.loginfirebase.model.User
 import com.example.loginfirebase.model.Workout
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.auth.*
 
 class Repository {
     val db = Firebase.firestore
+    val auth = FirebaseAuth.getInstance()
+
+    fun getUserDB(): MutableLiveData<User> {
+        var user = MutableLiveData<User>()
+        var currentUser = auth.currentUser?.email
+        if (currentUser != null) {
+            db.collection("users").whereEqualTo("email",currentUser)
+                .get()
+                .addOnSuccessListener { docs ->
+                    user.value = User(
+                        docs.first().getString("name")!!,
+                        docs.first().getString("email")!!,
+                        docs.first().getString("password")!!
+                    )
+                }
+        }
+        return user
+
+    }
 
     // Endpoints Workout
     fun getWorkouts(): LiveData<MutableList<Workout>> {
@@ -57,7 +78,8 @@ class Repository {
                             doc.getString("reps"),
                             doc.getString("equipment"),
                             doc.getString("focus_area"),
-                            doc.getString("image")
+                            doc.getString("image"),
+                            doc.getString("preparation")!!
                         )
                     )
                 }
@@ -97,7 +119,8 @@ class Repository {
                             doc.getString("reps")!!,
                             doc.getString("equipment")!!,
                             doc.getString("focus_area")!!,
-                            doc.getString("image")!!
+                            doc.getString("image")!!,
+                            doc.getString("preparation")!!
                         )
                     )
                 }
@@ -129,7 +152,7 @@ class Repository {
                     listData.add(
                         CustomWorkout(
                             creatorUser,
-                            name!!,
+                            name,
                             exercises.toMutableList(),
                             creationDate
                         )
@@ -160,7 +183,8 @@ class Repository {
                                     doc.getString("reps"),
                                     doc.getString("equipment"),
                                     doc.getString("focus_area"),
-                                    doc.getString("image")
+                                    doc.getString("image"),
+                                    doc.getString("preparation")!!
                                 )
                             )
                         }

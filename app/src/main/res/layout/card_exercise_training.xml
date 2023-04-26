@@ -159,23 +159,22 @@
             android:text="Sets: "
             android:textColor="@color/black"
             android:textSize="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/etEditSets"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.344"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/contraintLayout" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvTitleEditReps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="Reps: "
             android:textColor="@color/black"
             android:textSize="16dp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/etEditReps"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.337"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvTitleEditSets" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/etEditSets"

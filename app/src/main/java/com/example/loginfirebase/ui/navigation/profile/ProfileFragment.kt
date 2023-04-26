@@ -3,6 +3,7 @@ package com.example.loginfirebase.ui.navigation.profile
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.loginfirebase.data.firebase.Repository
 import com.example.loginfirebase.databinding.FragmentProfileBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -17,8 +19,8 @@ import com.google.firebase.storage.ktx.storage
 
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
-     val storageRef = Firebase.storage.reference;
-
+    val storageRef = Firebase.storage.reference;
+    lateinit var repository: Repository
     private var currentFile: Uri? = null
 
     override fun onCreateView(
@@ -27,7 +29,12 @@ class ProfileFragment : Fragment() {
     ): View? {
 
         val user = Firebase.auth.currentUser
-
+        repository = Repository()
+        repository.getUserDB().observe(viewLifecycleOwner){
+            binding.editTextName.text = Editable.Factory.getInstance().newEditable(it.name)
+            binding.editTextEmail.text = Editable.Factory.getInstance().newEditable(it.email)
+            binding.editTextPassword.text = Editable.Factory.getInstance().newEditable(it.password)
+        }
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         binding.buttonSelectImage.setOnClickListener {

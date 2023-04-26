@@ -138,11 +138,11 @@ class VerificationActivity : AppCompatActivity() {
         docUsers.document(name)
             .delete()
             .addOnSuccessListener {
-                Toast.makeText(applicationContext,"S'ha borrat el usuari correctament", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,"User Deleted", Toast.LENGTH_SHORT).show()
                 goToLogin()
             }
             .addOnFailureListener {
-                Toast.makeText(applicationContext,"No s'ha pogut borrar el usuari.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,"Not User Deleted.", Toast.LENGTH_SHORT).show()
             }
     }
 

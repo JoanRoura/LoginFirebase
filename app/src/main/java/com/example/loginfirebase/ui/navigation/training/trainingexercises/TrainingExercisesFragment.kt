@@ -92,6 +92,10 @@ class TrainingExercisesFragment : Fragment() {
         val imageExercise = dialogView.findViewById<ImageView>(R.id.ivExercise)
         Glide.with(imageExercise.context).load(exercises.image).into(imageExercise)
 
+        val preparationExercise = dialogView.findViewById<TextView>(R.id.tvDescriptionExercise)
+        preparationExercise.text = exercises.preparation
+
+
         // TODO: Implementar decripcio als exercisis en el firestore
         // val descriptionExercise = dialogView.findViewById<TextView>(R.id.tvDescriptionExercise)
         // descriptionExercise.text = exercise.

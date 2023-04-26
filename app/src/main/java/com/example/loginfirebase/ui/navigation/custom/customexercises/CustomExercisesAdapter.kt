@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintSet.Constraint
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.loginfirebase.R
@@ -39,7 +38,7 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
     override fun onBindViewHolder(holder: CustomExercisesHolder, position: Int) {
         val customCard = listData[position]
 
-        holder.bindView(customCard)
+        holder.bindView(customCard, position)
     }
 
     override fun getItemCount(): Int {
@@ -51,7 +50,7 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
     }
 
     inner class CustomExercisesHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        fun bindView(exercise: Exercise) {
+        fun bindView(exercise: Exercise, position: Int) {
             val name = itemView.findViewById<TextView>(R.id.tvNameExerciseTraining)
             name.text = exercise.name
 
@@ -67,24 +66,53 @@ class CustomExercisesAdapter : RecyclerView.Adapter<CustomExercisesAdapter.Custo
             val image = itemView.findViewById<ImageView>(R.id.ivItemExercise)
             Glide.with(image.context).load(exercise.image).into(image)
 
-//            val constraintEditExercise = itemView.findViewById<View>(R.id.constraintEditExercise)
-//            val titleEditSets = itemView.findViewById<TextView>(R.id.tvTitleEditSets)
-//            val titleEditReps = itemView.findViewById<TextView>(R.id.tvTitleEditReps)
-//            val editSets = itemView.findViewById<EditText>(R.id.etEditSets)
-//            val editReps = itemView.findViewById<EditText>(R.id.etEditReps)
-//
-//            val isExpandable : Boolean? = exercise.isExpandable
-//
-//            titleEditSets.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
-//            titleEditReps.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
-//            editSets.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
-//            editReps.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
-//
-//            constraintEditExercise.setOnClickListener {
-//                exercise.isExpandable = !exercise.isExpandable!!
-//                notifyDataSetChanged()
-////                notifyItemChanged(absoluteAdapterPosition)
-//            }
+            val constraintEditExercise = itemView.findViewById<View>(R.id.constraintEditExercise)
+            val titleEditSets = itemView.findViewById<TextView>(R.id.tvTitleEditSets)
+            val titleEditReps = itemView.findViewById<TextView>(R.id.tvTitleEditReps)
+            val editSets = itemView.findViewById<EditText>(R.id.etEditSets)
+            val editReps = itemView.findViewById<EditText>(R.id.etEditReps)
+
+            val isExpandable : Boolean? = exercise.isExpandable
+
+            titleEditSets.visibility = if (isExpandable!!) View.VISIBLE else View.GONE
+            titleEditReps.visibility = if (isExpandable) View.VISIBLE else View.GONE
+            editSets.visibility = if (isExpandable) View.VISIBLE else View.GONE
+            editReps.visibility = if (isExpandable) View.VISIBLE else View.GONE
+
+            constraintEditExercise.setOnClickListener {
+                isAnyItemExpanded(position)
+                exercise.isExpandable = !exercise.isExpandable
+                notifyItemChanged(position)
+//                notifyItemChanged(absoluteAdapterPosition)
+            }
+
+            fun collapseExpandedView() {
+                titleEditSets.visibility = View.GONE
+                titleEditReps.visibility = View.GONE
+                editSets.visibility = View.GONE
+                editReps.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun isAnyItemExpanded(postion : Int) {
+
+        val temp = listData.indexOfFirst {
+            it.isExpandable
+        }
+
+        if (temp >= 0 && temp != postion) {
+            listData[temp].isExpandable = false
+            notifyItemChanged(temp, 0)
+        }
+    }
+
+    override fun onBindViewHolder(holder: CustomExercisesHolder, position: Int, payloads: MutableList<Any>) {
+
+        if (payloads.isNotEmpty() && payloads[0] == 0) {
+//            holder.bindView()
+        } else {
+            super.onBindViewHolder(holder, position, payloads)
         }
     }
 }

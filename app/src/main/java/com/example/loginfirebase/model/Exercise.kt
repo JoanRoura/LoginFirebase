@@ -10,7 +10,8 @@ data class Exercise(
     var equipment : String? = null,
     var focus_area : String? = null,
     var image : String? = null,
+    var preparation: String? = null,
     var editSets : EditText? = null,
     var editReps : EditText? = null,
-    var isExpandable : Boolean? = null
+    var isExpandable : Boolean = false,
     )

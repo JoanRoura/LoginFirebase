@@ -41,13 +41,13 @@ class SignInActivity : AppCompatActivity() {
                         if (register.isSuccessful) {
 
                             register.result.user?.let { user ->
-                                db.collection(getString(R.string.users_collection)).document(user.uid)
+                                db.collection(getString(R.string.users_collection)).document(email.toString())
                                     .set(createdUser)
                                     .addOnSuccessListener {
-                                        Toast.makeText(applicationContext,"S'ha creat el document",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(applicationContext,"User created",Toast.LENGTH_SHORT).show()
                                     }
                                     .addOnFailureListener {
-                                        Toast.makeText(applicationContext,"No s'ha pogut crear el document",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(applicationContext,"User create failed",Toast.LENGTH_SHORT).show()
                                     }
 
                                 goToLogin(register.result?.user?.email ?: "", password.toString())

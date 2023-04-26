@@ -67,11 +67,13 @@ class NewCustomFragment : Fragment() {
             val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
             val formattedDate = currentDate.format(formatter)
 
-            if (user != null) {
+            if (user != null && currentCustomName.isNotEmpty()) {
                 createCustomWorkout(currentCustomName,
                     exercisesCustomWorkout,
                     formattedDate,
                     user.uid)
+            }else{
+                Toast.makeText(requireContext(), "Create a Workout Name", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -95,7 +97,7 @@ class NewCustomFragment : Fragment() {
         uid: String,
     ) {
 
-        if (currentCustomName != null && selectedExercises.isNotEmpty()) {
+        if (selectedExercises.isNotEmpty()) {
 
             val newCustomWorkout =
                 CustomWorkout(uid, currentCustomName, exercisesCustomWorkout, formattedDate)
@@ -104,13 +106,13 @@ class NewCustomFragment : Fragment() {
                 .document(replaceSpacesWithUnderscores(currentCustomName))
                 .set(newCustomWorkout)
                 .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "S'ha creat la rutina", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Routine created", Toast.LENGTH_SHORT)
                         .show()
                     goToCustomFragment()
                 }
                 .addOnFailureListener {
                     Toast.makeText(requireContext(),
-                        "No s'ha pogut crear la rutina",
+                        "I cant create the routine",
                         Toast.LENGTH_SHORT).show()
                 }
         }
@@ -132,14 +134,14 @@ class NewCustomFragment : Fragment() {
 //                exerciseViewModel.setExercises(exercises)
                 if (selectedExercises.isEmpty()) {
                     selectedExercises.add(exercise)
-                    Toast.makeText(requireContext(), "S'ha afegit el exercici.", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Exercice Add", Toast.LENGTH_SHORT)
                         .show()
                 } else {
                     var exerciseExists = false
 
                     for (selectedExercise in selectedExercises) {
                         if (selectedExercise.name == exercise.name) {
-                            Toast.makeText(requireContext(), "NO.", Toast.LENGTH_SHORT)
+                            Toast.makeText(requireContext(), "Exercice not Add.", Toast.LENGTH_SHORT)
                                 .show()
                             exerciseExists = true
                             break

@@ -40,10 +40,10 @@ class EditUserActivity : AppCompatActivity() {
                 currentUser
                     .update("email", currentEmail.toString(), "password", currentPassword.toString())
                     .addOnSuccessListener {
-                        Toast.makeText(applicationContext,"S'ha actualitzat correctament el usuari.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"Updated user.", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener {
-                        Toast.makeText(applicationContext,"No s'ha pogut actualitza el usuari.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"Not Updated user.", Toast.LENGTH_SHORT).show()
                     }
 
                 showVerification(currentEmail.toString(), currentPassword.toString());
